@@ -1,0 +1,123 @@
+// serial output for helping innocent humans
+
+ST7789V ID=0x7789
+
+// from old code
+
+Read Registers on MCUFRIEND UNO shield
+controllers either read as single 16-bit
+e.g. the ID is at readReg(0)
+or as a sequence of 8-bit values
+in special locations (first is dummy)
+
+reg(0x0000) C0 C0	ID: ILI9320, ILI9325, ILI9335, ...
+reg(0x0004) C4 85 85 52	Manufacturer ID
+reg(0x0009) C9 00 61 00 00	Status Register
+reg(0x000A) CA 08	Get Power Mode
+reg(0x000C) CC 06	Get Pixel Format
+reg(0x0061) E1 E1	RDID1 HX8347-G
+reg(0x0062) E2 E2	RDID2 HX8347-G
+reg(0x0063) E3 E3	RDID3 HX8347-G
+reg(0x0064) E4 E4	RDID1 HX8347-A
+reg(0x0065) E5 E5	RDID2 HX8347-A
+reg(0x0066) E6 E6	RDID3 HX8347-A
+reg(0x0067) E7 E7	RDID Himax HX8347-A
+reg(0x0070) F0 F0	Panel Himax HX8347-A
+reg(0x00A1) E1 E1 E1 E1 E1	RD_DDB SSD1963
+reg(0x00B0) F0 00	RGB Interface Signal Control
+reg(0x00B4) F4 0B	Inversion Control
+reg(0x00B6) F6 00 00 00 00	Display Control
+reg(0x00B7) F7 35	Entry Mode Set
+reg(0x00BF) FF 00 00 00 06 0C	ILI9481, HX8357-B
+reg(0x00C0) C0 2C 00 00 00 00 00 00 00	Panel Control
+reg(0x00C8) C8 AA 00 00 00 00 00 00 00 00 00 00 00	GAMMA
+reg(0x00CC) CC 00	Panel Control
+reg(0x00D0) D0 A4 A1	Power Control
+reg(0x00D2) D2 00 00 00 00	NVM Read
+reg(0x00D3) D3 00 00 00	ILI9341, ILI9488
+reg(0x00D4) D4 00 00 00	Novatek ID
+reg(0x00DA) DA 85	RDID1
+reg(0x00DB) DB 85	RDID2
+reg(0x00DC) DC 52	RDID3
+reg(0x00E0) E0 D0 00 02 07 0B 1A 31 54 40 29 12 12 12 17 00	GAMMA-P
+reg(0x00E1) E1 D0 00 02 07 05 25 2D 44 45 1C 18 16 1C 1D 00	GAMMA-N
+reg(0x00EF) EF 00 00 00 00 00	ILI9327
+reg(0x00F2) F2 0F 00 00 00 00 00 00 00 00 00 00	Adjust Control 2
+reg(0x00F6) F6 FF FF 33	Interface Control
+
+// from updated code
+
+C4 85 85 52	Manufacturer ID
+reg(0x0009) C9 00 61 00 00	Status Register
+reg(0x000A) CA 08	Get Powsr Mode
+reg(0x000C) CC 06	Get Pixel Format
+reg(0x0030) F0 F0 F0 F0 F0	PTLAR
+reg(0x0033) F3 F3 F3 F3 F3 F3 F3	VSCRLDEF
+reg(0x0061) E1 E1	RDID1 HX8347-G
+reg(0x0062) E2 E2	RDID2 HX8347-G
+reg(0x0063) E3 E3	RDID3 HX8347-G
+reg(0x0064) E4 E4	RDID1 HX8347-A
+reg(0x0065) E5 E5	RDID2 HX8347-A
+reg(0x0066) E6 E6	RDID3 HX8347-A
+reg(0x0067) E7 E7	RDID Himax HX8347-A
+reg(0x0070) F0 F0	Panel Himax HX8347-A
+reg(0x00A1) E1 E1 E1 E1 E1	RD_DDB SSD1963
+reg(0x00B0) F0 00	RGB Interface Signal Control
+reg(0x00B3) F3 00 0F 0F 00	Frame Memory
+reg(0x00B4) F4 0B	Frame Mode
+reg(0x00B6) F6 00 00 00 00	Display Control
+reg(0x00B7) F7 35	Entry Mode Set
+reg(0x00BF) FF 00 00 00 06 0C	ILI9481, HX8357-B
+reg(0x00C0) C0 2C 00 00 00 00 00 00 00	Panel Control
+reg(0x00C1) C1 85 85 52	Display Timing
+reg(0x00C5) C5 20	Frame Rate
+reg(0x00C8) C8 AA 00 00 00 00 00 00 00 00 00 00 00	GAMMA
+reg(0x00CC) CC 00	Panel Control
+reg(0x00D0) D0 A4 A1 00	Power Control
+reg(0x00D1) D1 00 00 00	VCOM Control
+reg(0x00D2) D2 00 00	Power Normal
+reg(0x00D3) D3 00 00 00	ILI9341, ILI9488
+reg(0x00D4) D4 00 00 00	Novatek
+reg(0x00DA) DA 85	RDID1
+reg(0x00DB) DB 85	RDID2
+reg(0x00DC) DC 52	RDID3
+reg(0x00E0) E0 D0 00 02 07 0B 1A 31 54 40 29 12 12 12 17 00	GAMMA-P
+reg(0x00E1) E1 D0 00 02 07 05 25 2D 44 45 1C 18 16 1C 1D 00	GAMMA-N
+reg(0x00EF) EF 00 00 00 00 00	ILI9327
+reg(0x00F2) F2 0F 00 00 00 00 00 00 00 00 00 00	Adjust Control 2
+reg(0x00F6) F6 FF FF 33	Interface Control
+
+// TouchScreen.h GFX Calibration output
+
+Making all control and bus pins INPUT_PULLUP
+Typical 30k Analog pullup with corresponding pin
+would read low when digital is written LOW
+e.g. reads ~25 for 300R X direction
+e.g. reads ~30 for 500R Y direction
+
+Testing : (A1, D7) = 27
+Testing : (A2, D6) = 33
+Diagnosing as:-
+XM,XP:  (A1, D7) = 27
+YP,YM:  (A2, D6) = 33
+ID = 0x7789
+
+cx=380 cy=790 cz=150 LEFT, TOP, Pressure
+cx=393 cy=748 cz=149 LEFT, MIDH, Pressure
+cx=281 cy=370 cz=152 LEFT, BOT, Pressure
+cx=428 cy=784 cz=151 MIDW, TOP, Pressure
+cx=427 cy=635 cz=152 MIDW, BOT, Pressure
+cx=479 cy=791 cz=151 RT, TOP, Pressure
+cx=853 cy=563 cz=524 RT, MIDH, Pressure
+cx=588 cy=511 cz=152 RT, BOT, Pressure
+MCUFRIEND_kbv ID=0x7789  240 x 320
+
+const int XP=7,XM=A1,YP=A2,YM=6; //240x320 ID=0x7789
+const int TS_LEFT=337,TS_RT=653,TS_TOP=797,TS_BOT=495;
+PORTRAIT CALIBRATION     240 x 320
+x = map(p.x, LEFT=337, RT=653, 0, 240)
+y = map(p.y, TOP=797, BOT=495, 0, 320)
+Touch Pin Wiring XP=7 XM=A1 YP=A2 YM=6
+LANDSCAPE CALIBRATION    320 x 240
+x = map(p.y, LEFT=797, RT=495, 0, 320)
+y = map(p.x, TOP=653, BOT=337, 0, 240)
